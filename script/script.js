@@ -16,7 +16,7 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     $(input).on('keypress', function(event){
       if (event.keyCode === 13)
         event.preventDefault();
-        if (pokeTeam.length < 6)
+        if (pokeTeam.length < 6 || !pokeTeam[recent])
           for (i in pokemon)
             if (input.val().toLowerCase() === pokemon[i].name){
               input.val('');
