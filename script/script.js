@@ -38,6 +38,13 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
       img.empty();
       img.append('<img src="http://pokeapi.co/' + sprite.image + '">');
     });
+    $('.slot' + (recent + 1)).hover(function(){
+      var slotHover = '.sprite.slot' + (this.className.charAt(this.className.length-1));
+      $(slotHover).css('background-color', '#CEF').css('border-radius', '20%');
+    }, function(){
+      var slotHover = '.sprite.slot' + (this.className.charAt(this.className.length-1));
+      $(slotHover).css('background-color', '');
+    });
     removeText.append('<a href="#">remove</a>');
     pName.append(pokemon.name);
     dexNum.append('#'+pokemon.national_id);
@@ -50,6 +57,7 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
       return typeSprites;
     });
   };
+
   $('.remove').on('click', function(){
     var parent = $(this).parent()[0].className;
     removePkmn(parent.charAt(parent.length-1), event);
@@ -66,6 +74,10 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     dexNum.empty();
     pType.empty();
     removeText.empty();
+    $('.sprite.slot' + slot).css('background-color', '');
+    $('.slot' + (recent + 1)).hover(function(){
+      $('.sprite.slot' + slot).css('background-color', '');
+    });
   };
 
   function getTargets(){
