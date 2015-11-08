@@ -41,9 +41,13 @@ table {
   width: 65%; }
   table td {
     text-align: center; }
-    table td div {
-      width: 120px;
-      height: 120px; }
+    table td.statList li {
+      text-align: left; }
+    table td span {
+      text-align: center; }
+  table div {
+    width: 120px;
+    height: 120px; }
 
 footer {
   position: absolute;
@@ -58,10 +62,11 @@ footer {
   padding-top: 0.4em;
   font-size: 0.7em; }
 
-.chart {
+.statList {
   padding: 1em 3em;
   background-color: #BBB;
-  text-align: left; }
+  text-align: left;
+  display: none; }
 
 tr .stats {
   padding-bottom: 2em; }
@@ -72,7 +77,8 @@ a {
 
 .sprite img {
   max-width: 150px;
-  min-width: 120px; }
+  min-width: 120px;
+  max-height: 130px; }
 
 .ui-autocomplete {
   max-height: 100px;
@@ -81,5 +87,40 @@ a {
   width: 100px;
   font-size: .8em;
   text-align: left; }
+
+select {
+  width: 90%;
+  display: block;
+  margin: 5% auto;
+  font-size: 16px;
+  border: solid 1px #AAA;
+  border-radius: 3px; }
+
+.statList > span {
+  margin: 1% auto;
+  padding: 2px;
+  display: block;
+  background-color: #999;
+  width: 90%;
+  height: 1.6em;
+  font-size: 1em; }
+
+.max-bar {
+  width: 200px;
+  height: 15px;
+  background-color: #999;
+  overflow: hidden;
+  text-align: left;
+  border-radius: 3px;
+  border: 1px solid #555; }
+
+.base-bar {
+  display: inline-block;
+  border-radius: 3px;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  border-right: 2px solid #7AC;
+  background-color: #CFF; }
 
 /*# sourceMappingURL=style.css.map */

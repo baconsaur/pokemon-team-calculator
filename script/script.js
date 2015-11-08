@@ -1,3 +1,7 @@
+$('#pokeSelect').on('focus', function(){
+  $('#pokeSelect').val('');
+});
+
 $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     var pokeTeam = [];
     var recent = 0;
@@ -9,15 +13,13 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     var img;
     var removeText;
     var pokeSearch = [];
+    var statNames = ['hp', 'attack', 'defense', 'sp_atk', 'sp_def', 'speed', 'total'];
+    var statMax = [255, 180, 230, 180, 230, 180, 720]
 
     for(var i in pokemon) {
         if(pokemon[i].name.search(/(-(?!mi)[a-z]{4,})(-[a-z]{1,})?/) === -1)
           pokeSearch.push(pokemon[i].name);
     }
-
-    input.on('focus', function(event){
-      input.val('');
-    });
 
     $(input).autocomplete({
       source: function( request, response ) {
@@ -78,8 +80,21 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     removePkmn(parent.charAt(parent.length-1), event);
   });
 
+  $('.sprite').on('click', function(){
+    var slot = this.className.charAt(this.className.length-1);
+    if(pokeTeam[slot - 1])
+      selectPokemon(slot);
+  });
+
   function removePkmn(slot, event){
     recent = slot - 1;
+    var currentDisplay = $('.statList>h1');
+    if(currentDisplay[0].innerText.substr(0, pokeTeam[recent].name.length) === pokeTeam[recent].name){
+      $('.statList').hide('fast');
+      $('.statList>ul').empty();
+      $('.statList>h1').remove();
+      $('#moveset').empty();
+    }
     pokeTeam[recent] = '';
     event.preventDefault();
     getTargets();
@@ -102,4 +117,48 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     pType = $('.stats.slot' + (recent + 1) + ">ul>li>figure");
     removeText = $('.stats.slot' + (recent + 1) + ">.remove");
   }
+
+  function selectPokemon(slot){
+    $('.statList').show('fast');
+    $('.statList>ul').empty();
+    $('.statList>h1').remove();
+    $('#moveset').empty();
+    $('.statList>span').empty();
+    $('.statList>ul').before("<h1>" + pokeTeam[slot - 1].name + ' Base Stats</h1>');
+    populateMoves(slot);
+    var total = 0;
+    for (var i = 0;i<7;i++){
+      $('.statList>ul').append("<li>" + statNames[i].toUpperCase().replace('_', '.') + statChart(pokeTeam[slot - 1][statNames[i]], i, total+=pokeTeam[slot - 1][statNames[i]]) + "</li>");
+    }
+  }
+
+  function statChart(stat, i, total){
+    if (!stat)
+      stat = total;
+    var statPercent = Math.floor((stat / statMax[i]) * 100);
+    return ('<div class="max-bar"><div class="base-bar" style="width:' + statPercent + '%">' + stat + '</div></div>');
+  }
+
+  function populateMoves(slot){
+    $('#moveset').append('<option value="">Select a move</option>');
+    for (var i in pokeTeam[slot - 1].moves)
+      $('#moveset').append('<option value="' + pokeTeam[slot - 1].moves[i].name + '">' + pokeTeam[slot - 1].moves[i].name + '</option>')
+  }
+
+  $('#moveset').change(function(){
+    var nextSpan = $('.statList>span')
+    for (var i=0;i<4;i++){
+      if ($('#moveset').val() === nextSpan[i].innerText)
+        break;
+      if ($('#moveset').val() && !nextSpan[i].innerText){
+        $(nextSpan[i]).append($('#moveset').val());
+        break;
+      }
+    }
+  });
+
+  $('.statList>span').click(function(event){
+    $(this).empty();
+  })
+
 });
