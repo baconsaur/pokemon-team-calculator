@@ -8,9 +8,24 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     var pType;
     var img;
     var removeText;
+    var pokeSearch = [];
+
+    for(var i in pokemon) {
+        if(pokemon[i].name.search(/(-(?!mi)[a-z]{4,})(-[a-z]{1,})?/) === -1)
+          pokeSearch.push(pokemon[i].name);
+    }
 
     input.on('focus', function(event){
       input.val('');
+    });
+
+    $(input).autocomplete({
+      source: function( request, response ) {
+        var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+        response( $.grep( pokeSearch, function( item ){
+            return matcher.test( item );
+        }) );
+      }
     });
 
     $(input).on('keypress', function(event){

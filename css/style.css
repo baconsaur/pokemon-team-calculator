@@ -22,14 +22,14 @@ main h1 {
   font-size: 1.2em; }
 
 input {
-  width: 15%;
+  width: 20%;
   margin: 2% auto;
   display: block;
   height: 2em;
   padding: 5px 0 5px 10px;
   border: 1px solid #AAA;
   border-radius: 10px;
-  font-size: .8em; }
+  font-size: .8em !important; }
   input:focus {
     border: 3px solid #CEF;
     border-radius: 10px;
@@ -67,7 +67,19 @@ tr .stats {
   padding-bottom: 2em; }
 
 a {
-  color: black;
+  color: #7AC;
   text-decoration: none; }
+
+.sprite img {
+  max-width: 150px;
+  min-width: 120px; }
+
+.ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100px;
+  font-size: .8em;
+  text-align: left; }
 
 /*# sourceMappingURL=style.css.map */
