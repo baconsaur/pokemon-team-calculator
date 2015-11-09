@@ -7,7 +7,7 @@ body {
   font-family: 'Roboto', sans-serif; }
   body > header {
     width: 100%;
-    padding: .7em 0 0 .4em;
+    height: 5%;
     background-color: #BBB;
     border-bottom: 10px solid #999;
     color: white; }
@@ -29,7 +29,7 @@ input {
   padding: 5px 0 5px 10px;
   border: 1px solid #AAA;
   border-radius: 10px;
-  font-size: .8em !important; }
+  font-size: .7em !important; }
   input:focus {
     border: 3px solid #CEF;
     border-radius: 10px;
@@ -38,7 +38,9 @@ input {
 
 table {
   margin: 0 auto;
-  width: 65%; }
+  margin-bottom: 2%;
+  width: 65%;
+  font-size: .9em; }
   table td {
     text-align: center; }
     table td.statList li {
@@ -49,24 +51,17 @@ table {
     width: 120px;
     height: 120px; }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  background-color: #BBB;
-  color: white; }
-
 .remove {
   padding-top: 0.4em;
   font-size: 0.7em; }
 
 .statList {
-  padding: 1em 3em;
   background-color: #BBB;
   text-align: left;
-  display: none; }
+  display: none;
+  border-radius: 10px;
+  border: 2px solid #999;
+  padding: 2%; }
 
 tr .stats {
   padding-bottom: 2em; }
@@ -122,5 +117,21 @@ select {
   font-weight: bold;
   border-right: 2px solid #7AC;
   background-color: #CFF; }
+
+.typeChart {
+  display: none;
+  border: 2px solid #999;
+  font-size: .8em;
+  padding: 0;
+  width: 55%;
+  border-collapse: collapse; }
+  .typeChart th {
+    border-bottom: 1px solid #AAA; }
+  .typeChart td {
+    border: 1px solid #DDD;
+    height: 14px;
+    width: 24%; }
+    .typeChart td:first-child {
+      width: 44px; }
 
 /*# sourceMappingURL=style.css.map */

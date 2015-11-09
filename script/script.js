@@ -12,6 +12,7 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     var pType;
     var img;
     var removeText;
+    var current = 0;
     var pokeSearch = [];
     var statNames = ['hp', 'attack', 'defense', 'sp_atk', 'sp_def', 'speed', 'total'];
     var statMax = [255, 180, 230, 180, 230, 180, 720]
@@ -51,6 +52,8 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     });
 
   function add(pokemon){
+    current++;
+    $('.typeChart').show();
     $.get(("http://pokeapi.co/" + pokemon.sprites[0].resource_uri), function(sprite){
       img.empty();
       img.append('<img src="http://pokeapi.co/' + sprite.image + '">');
@@ -88,6 +91,9 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
   });
 
   function removePkmn(slot, event){
+    current--;
+    if (!current)
+      $('.typeChart').hide();
     recent = slot - 1;
     var currentDisplay = $('.statList>h1');
     if(currentDisplay[0] && currentDisplay[0].innerText.substr(0, pokeTeam[recent].name.length) === pokeTeam[recent].name){
