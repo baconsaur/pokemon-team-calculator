@@ -99,6 +99,14 @@ select {
   width: 90%;
   height: 1.6em;
   font-size: 1em; }
+  .statList > span ul {
+    float: left;
+    width: 200px;
+    display: inline; }
+  .statList > span h1 {
+    float: left;
+    width: 200px;
+    display: inline; }
 
 .max-bar {
   width: 200px;
@@ -133,5 +141,29 @@ select {
     width: 24%; }
     .typeChart td:first-child {
       width: 44px; }
+
+#max {
+  padding: 0;
+  float: right;
+  width: 15%;
+  font-weight: bold;
+  line-height: 2.45em; }
+  #max h1 {
+    line-height: normal;
+    margin-bottom: 6px; }
+
+#min {
+  padding: 0;
+  float: right;
+  width: 15%;
+  font-weight: bold;
+  line-height: 2.45em; }
+  #min h1 {
+    line-height: normal;
+    margin-bottom: 6px; }
+
+small {
+  line-height: normal;
+  font-size: .6em; }
 
 /*# sourceMappingURL=style.css.map */

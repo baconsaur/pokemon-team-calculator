@@ -137,6 +137,8 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     var total = 0;
     for (var i = 0;i<7;i++){
       $('.statList>ul').append("<li>" + statNames[i].toUpperCase().replace('_', '.') + statChart(pokeTeam[slot - 1][statNames[i]], i, total+=pokeTeam[slot - 1][statNames[i]]) + "</li>");
+      $('#min>ul').append('<li>' + min(pokeTeam[slot - 1][statNames[i]], i) + '</li>');
+      $('#max>ul').append('<li>' + max(pokeTeam[slot - 1][statNames[i]], i) + '</li>');
     }
   }
 
@@ -234,6 +236,30 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
       else
         thisCell.innerText = '';
     }
+  }
+
+  function max(stat, i){
+    var statmax;
+    if(i===0){
+      statmax = Math.floor((2 * stat + 31 + 252) + 100 + 10);
+    } else if (i===6) {
+      statmax = '';
+    } else {
+      statmax = Math.floor(Math.floor((2 * stat + 31 + 252) + 5) * 1.1);
+    }
+    return statmax;
+  }
+
+  function min(stat, i){
+    var statmin;
+    if (i===0){
+      statmin = Math.floor((2 * stat) + 100 + 10);
+    } else if (i===6) {
+      statmin = ''
+    } else {
+      statmin = Math.floor(Math.floor((2 * stat) + 5) * 0.9);
+    }
+    return statmin;
   }
 
 });
