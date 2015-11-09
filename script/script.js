@@ -68,11 +68,12 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     pType.append(function(){
       var typeSprites = ''
       for (var i in pokemon.types){
-        var typeName = pokemon.types[i].name
+        var typeName = pokemon.types[i].name;
         typeSprites += '<img src="images/' + typeName + '.png" alt="' + typeName + '" />'
       }
       return typeSprites;
     });
+    addType(pokemon, 1);
   };
 
   $('.remove').on('click', function(){
@@ -89,12 +90,13 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
   function removePkmn(slot, event){
     recent = slot - 1;
     var currentDisplay = $('.statList>h1');
-    if(currentDisplay[0].innerText.substr(0, pokeTeam[recent].name.length) === pokeTeam[recent].name){
+    if(currentDisplay[0] && currentDisplay[0].innerText.substr(0, pokeTeam[recent].name.length) === pokeTeam[recent].name){
       $('.statList').hide('fast');
       $('.statList>ul').empty();
       $('.statList>h1').remove();
       $('#moveset').empty();
     }
+    removeType(pokeTeam[recent]);
     pokeTeam[recent] = '';
     event.preventDefault();
     getTargets();
@@ -160,5 +162,72 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
   $('.statList>span').click(function(event){
     $(this).empty();
   })
+
+  function addType(pokemon, modifier){
+    for(var i in pokemon.types)
+      $.get(("http://pokeapi.co/" + pokemon.types[i].resource_uri), function(data){
+        for (var c=1;c<=18;c++){
+          for (var j in data.super_effective){
+            if($('.typeChart tr')[c].className === data.super_effective[j].name){
+              var thisRow = $('.typeChart tr')[c];
+              calcCell($(thisRow).children()[1], modifier, true);
+            }
+          }
+          for (var j in data.ineffective){
+            if($('.typeChart tr')[c].className === data.ineffective[j].name){
+              var thisRow = $('.typeChart tr')[c];
+              calcCell($(thisRow).children()[2], modifier);
+            }
+          }
+          for (var j in data.no_effect){
+            if($('.typeChart tr')[c].className === data.no_effect[j].name){
+              var thisRow = $('.typeChart tr')[c];
+              calcCell($(thisRow).children()[3], modifier);
+            }
+          }
+          for (var j in data.weakness){
+            if($('.typeChart tr')[c].className === data.weakness[j].name){
+              var thisRow = $('.typeChart tr')[c];
+              calcCell($(thisRow).children()[4], modifier);
+            }
+          }
+        }
+      })
+  }
+
+  function removeType(pokemon){
+    addType(pokemon, -1);
+  }
+
+  function cellColor(n, cell, green){
+    if(green && n===1)
+      $(cell).css('background-color', '#BF9');
+    else if(green && n===2)
+      $(cell).css('background-color', '#9E6');
+    else if(green && n>2)
+      $(cell).css('background-color', '#7D4');
+    else if(n===1)
+      $(cell).css('background-color', '#FB7');
+    else if(n===2)
+      $(cell).css('background-color', '#E95');
+    else if(n>2)
+      $(cell).css('background-color', '#D73');
+    else
+      $(cell).css('background-color', '#FFF');
+  }
+
+  function calcCell(thisCell, modifier, green){
+    if(!thisCell.innerText){
+      $(thisCell).append('1');
+      cellColor(1, thisCell, green);
+    } else {
+      var n = parseInt(thisCell.innerText) + 1 * modifier;
+      cellColor(n, thisCell, green);
+      if(n)
+        thisCell.innerText = n;
+      else
+        thisCell.innerText = '';
+    }
+  }
 
 });
