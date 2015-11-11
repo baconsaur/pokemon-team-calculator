@@ -1,7 +1,3 @@
-$('#pokeSelect').on('focus', function(){
-  $('#pokeSelect').val('');
-});
-
 $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     var pokeTeam = [];
     var recent = 0;
@@ -101,6 +97,8 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
       $('.statList>ul').empty();
       $('.statList>h1').remove();
       $('#moveset').empty();
+      $('#min>ul').empty();
+      $('#max>ul').empty();
     }
     removeType(pokeTeam[recent]);
     pokeTeam[recent] = '';
@@ -133,6 +131,8 @@ $.get("http://pokeapi.co/api/v1/pokedex/1", function(pokeData){
     $('#moveset').empty();
     $('.statList>span').empty();
     $('.statList>ul').before("<h1>" + pokeTeam[slot - 1].name + ' Base Stats</h1>');
+    $('#min>ul').empty();
+    $('#max>ul').empty();
     populateMoves(slot);
     var total = 0;
     for (var i = 0;i<7;i++){
